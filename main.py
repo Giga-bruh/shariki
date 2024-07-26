@@ -1,6 +1,6 @@
 import random
 import igrok
-import time
+
 import pygame as p
 import bot
 p.init()
