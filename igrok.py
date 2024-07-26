@@ -2,7 +2,7 @@
 
 import pygame as pg
 
-
+from nastroiki import *
 import baza_sharikov
 
 
@@ -19,25 +19,36 @@ class Player(baza_sharikov.Baza):
         self.idti_ili_net=0
 
     def ypravlenie(self):
-        super().ypravlenie()
+
 
         self.gde_mishka=pg.mouse.get_pos()
 
+        if self.pramoygolnik.x+30 >= SCREEN_WIDTH :
+            self.pramoygolnik.x -=1
+        if self.pramoygolnik.x-10 <=0:
+            self.pramoygolnik.x+=1
+        if self.pramoygolnik.y-10 <= 0 :
+            self.pramoygolnik.y +=1
+        if  self.pramoygolnik.y+30  >= SCREEN_HEIGHT:
+            self.pramoygolnik.y -=1
 
-        if self.pramoygolnik.center!=self.gde_mishka and self.idti_ili_net==1:
-            if self.gde_mishka[0]>self.pramoygolnik.center[0]:
+        else:
+            if self.pramoygolnik.center!=self.gde_mishka and self.idti_ili_net==1:
 
 
-                self.pramoygolnik.centerx+=1
-            elif self.gde_mishka[0]<self.pramoygolnik.center[0]:
+                if self.gde_mishka[0]>self.pramoygolnik.center[0]:
 
-                self.pramoygolnik.centerx-=1
-            if self.gde_mishka[1]<self.pramoygolnik.center[1]:
 
-                self.pramoygolnik.centery-=1
-            elif self.gde_mishka[1]>self.pramoygolnik.center[1]:
+                    self.pramoygolnik.centerx+=1
+                elif self.gde_mishka[0]<self.pramoygolnik.center[0]:
 
-                self.pramoygolnik.centery+=1
+                    self.pramoygolnik.centerx-=1
+                if self.gde_mishka[1]<self.pramoygolnik.center[1]:
+
+                    self.pramoygolnik.centery-=1
+                elif self.gde_mishka[1]>self.pramoygolnik.center[1]:
+
+                    self.pramoygolnik.centery+=1
 
 
 
@@ -47,18 +58,22 @@ class Player(baza_sharikov.Baza):
         for sieden_ili_net in self.igra.spisok_botov:
 
 
-                    if self.pramoygolnik.colliderect(sieden_ili_net.pramoygolnik):
+                    if self.pramoygolnik_proverka.colliderect(sieden_ili_net.pramoygolnik_proverka):
 
                         if self.radiys> sieden_ili_net.radiys:
                             self.igra.spisok_botov.remove(sieden_ili_net)
-                            self.pramoygolnik.width +=sieden_ili_net.radiys
-                            self.pramoygolnik.height+=sieden_ili_net.radiys
+                            self.pramoygolnik.width +=sieden_ili_net.radiys//2
+                            self.pramoygolnik.height+=sieden_ili_net.radiys//2
+                            self.pramoygolnik_proverka.width += sieden_ili_net.radiys // 2
+                            self.pramoygolnik_proverka.height += sieden_ili_net.radiys // 2
+                        elif self.radiys<sieden_ili_net.radiys:
 
 
-                        else:
+
                             self.igra.proigral_ili_pobedil= "вы проиграли"
 
-
+                    if self.radiys>=100:
+                        self.igra.proigral_ili_pobedil="вы победили"
     def otrisovka(self):
         super().otrisovka()
 

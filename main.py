@@ -14,7 +14,8 @@ class Game:
         self.izmenisla_ili_net=0
         self.tekst = p.freetype.Font("kartinki/comic-sans-ms.ttf", 80)
         self.igrok = igrok.Player(self,SCREEN_WIDTH/2, SCREEN_HEIGHT/2, [255, 255, 255],
-                           random.randint(100, 200), )
+                          20 )
+
         self.proigral_ili_pobedil=0
         self.spisok_botov=[]
         self.sobitie_sozdania=p.USEREVENT
@@ -43,31 +44,47 @@ class Game:
         for event in p.event.get():
             if event.type==pg.QUIT:
                 quit()
-            if event.type==self.sobitie_sozdania and len(self.spisok_botov)<=10:
-                self.bot = bot.Bot(self, random.randint(20, SCREEN_WIDTH), random.randint(20, SCREEN_HEIGHT),
-                                   [255, 255, 255], random.randint(10, 30) )
+            if event.type==self.sobitie_sozdania and len(self.spisok_botov)<=20:
+
+                self.random_storona = random.randint(0, 3)
+                if self.random_storona==0:
+                    self.kakaya_storona_x=random.randint(30,870)
+                    self.kakaya_storona_y=30
+                if self.random_storona==1:
+                    self.kakaya_storona_y = random.randint(30, 570)
+                    self.kakaya_storona_x = 30
+                if self.random_storona==2:
+                    self.kakaya_storona_y =  570
+                    self.kakaya_storona_x = random.randint(30,870)
+                if self.random_storona == 3:
+                    self.kakaya_storona_x = 870
+                    self.kakaya_storona_y = random.randint(30, 570)
+
+
+                self.bot = bot.Bot(self,self.kakaya_storona_x,self.kakaya_storona_y,
+                                   [random.randint(1,255),random.randint(1,255),random.randint(1,255)], random.randint(self.igrok.radiys//2, self.igrok.radiys*2) )
                 self.spisok_botov.append(self.bot)
             if event.type==self.sobitie_dvishenia and self.igrok.pramoygolnik.centerx!=self.igrok.gde_mishka:
                 self.igrok.idti_ili_net=1
 
 
     def draw(self):
-        if self.igrok.radiys <= 300 and self.proigral_ili_pobedil == 0:
-            self.igrok.otrisovka()
-            for boti in self.spisok_botov:
-                boti.otrisovka()
+        if self.igrok.radiys <= 100 and self.proigral_ili_pobedil == 0:
+
+
             if self.izmenisla_ili_net==1:
                 self.igrok = igrok.Player(self, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, [255, 255, 255],
                                           self.igrok.radiys )
             p.draw.rect(self.screen, [250, 0, 0], [0, 0, 900, 600], 5)
         else:
-            self.tekst.render_to(self.screen, [100, 19], self.proigral_ili_pobedil, [255, 255, 255])
+            self.tekst.render_to(self.screen, [SCREEN_WIDTH/4, SCREEN_HEIGHT/3], self.proigral_ili_pobedil, [255, 255, 255])
         p.display.flip()
     def update(self):
-        if self.igrok.radiys != 300 and self.proigral_ili_pobedil == 0:
+        if self.igrok.radiys != 100 and self.proigral_ili_pobedil == 0:
             for bot in self.spisok_botov:
                 bot.update()
             self.igrok.update()
+
 
 
 

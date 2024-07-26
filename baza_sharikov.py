@@ -18,12 +18,9 @@ class Baza:
 
 
         self.pramoygolnik=pg.rect.Rect(self.x,self.y,self.radiys,self.radiys)
-    def ypravlenie(self):
-       if self.pramoygolnik.centerx+50>=SCREEN_WIDTH or self.pramoygolnik.x<=0:
-            self.speed_x = -self.speed_x
+        self.pramoygolnik_proverka = pg.rect.Rect(self.x, self.y, self.radiys/1.7, self.radiys/1.7)
 
-       if self.pramoygolnik.topleft[1] <= 0 or self.pramoygolnik.bottomright[1]+50 >= SCREEN_HEIGHT:
-            self.speed_y = -self.speed_y
+
 
 
 
@@ -33,8 +30,10 @@ class Baza:
 
     def otrisovka(self):
 
-
+        self.pramoygolnik_proverka.center=self.pramoygolnik.center
         pygame.draw.ellipse(self.igra.screen, self.color, self.pramoygolnik)
+
+
 
     def update(self):
         self.ypravlenie()
