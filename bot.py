@@ -55,19 +55,7 @@ class Bot(baza_sharikov.Baza):
 
             self.x_dvishenia = random.randint(30, 900)
             self.y_dvishenia = random.randint(30, 600)
-            # if self.pramoygolnik.center != self.random_koordinati:
-            #     if self.random_koordinati[0] > self.pramoygolnik.center[0]:
-            #
-            #         self.pramoygolnik.centerx += 1
-            #     elif self.random_koordinati[0] < self.pramoygolnik.center[0]:
-            #
-            #         self.pramoygolnik.centerx -= 1
-            #     if self.random_koordinati[1] < self.pramoygolnik.center[1]:
-            #
-            #         self.pramoygolnik.centery -= 1
-            #     elif self.random_koordinati[1] > self.pramoygolnik.center[1]:
-            #
-            #         self.pramoygolnik.centery += 1
+
 
 
 
